@@ -3,11 +3,9 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { TrendingUp, Search, ArrowUp, ArrowDown } from "lucide-react"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts"
 
 // Mock data for the stock chart
 const stockData = {
@@ -50,7 +48,7 @@ const stockData = {
   ],
 }
 
-export function StockDetail() {
+export function StockDetail({ tickerSymbol, companyName }: any) {
   const [isSearchFocused, setIsSearchFocused] = useState(false)
   const [selectedInterval, setSelectedInterval] = useState("1D")
 
@@ -59,12 +57,12 @@ export function StockDetail() {
       <main className="flex-1 py-6 px-4 md:px-6">
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold">AAPL - Apple Inc.</h1>
+            <h1 className="text-3xl font-bold">{tickerSymbol} - {companyName}</h1>
             <div className="text-2xl font-semibold">$170.35 <span className="text-green-500 text-lg">+2.15 (1.28%)</span></div>
           </div>
           <Card>
             <CardHeader>
-              <CardTitle>Stock Performance</CardTitle>
+              <CardTitle>Performance</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="mb-4 flex justify-start space-x-2">

@@ -10,7 +10,7 @@ export function NavBar() {
 
   return (
     <header className="px-4 lg:px-6 h-20 flex items-center border-b">
-        <Link className="flex items-center justify-center" href="#">
+        <Link className="flex items-center justify-center" href="/">
           <TrendingUp className="h-6 w-6 text-primary" />
           <span className="ml-2 text-2xl font-bold text-primary">StockPro</span>
         </Link>
