@@ -3,8 +3,7 @@
 import Link from "next/link"
 import { Button } from "@/components/landing/ui/button"
 import { Input } from "@/components/landing/ui/input"
-import { TrendingUp, PieChart, Bell, Zap } from "lucide-react"
-import { NavBar } from "../NavBar"
+import { TrendingUp, PieChart, Bell, } from "lucide-react"
 
 export function StockAppLandingComponent() {
   return (

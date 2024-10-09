@@ -48,8 +48,7 @@ const stockData = {
   ],
 }
 
-export function StockDetail({ tickerSymbol, companyName }: any) {
-  const [isSearchFocused, setIsSearchFocused] = useState(false)
+export function StockDetail({ tickerSymbol, companyName }: { tickerSymbol: string, companyName: string }) {
   const [selectedInterval, setSelectedInterval] = useState("1D")
 
   return (
@@ -86,7 +85,7 @@ export function StockDetail({ tickerSymbol, companyName }: any) {
                 className="h-[400px]"
               >
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={stockData[selectedInterval]}>
+                  <LineChart data={stockData[selectedInterval as keyof typeof stockData]}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="date" />
                     <YAxis />
@@ -113,7 +112,7 @@ export function StockDetail({ tickerSymbol, companyName }: any) {
                     <dd className="text-lg font-semibold">$168.41</dd>
                   </div>
                   <div>
-                    <dt className="text-sm font-medium text-muted-foreground">Day's Range</dt>
+                    <dt className="text-sm font-medium text-muted-foreground">Day&apos;s Range</dt>
                     <dd className="text-lg font-semibold">$167.54 - $170.92</dd>
                   </div>
                   <div>

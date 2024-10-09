@@ -1,6 +1,6 @@
 import { StockDetail } from "@/components/stock-detail";
 
-export default async function StockPage({ params }: { params: { symbol: string } }) {
+export default async function StockPage() {
   const res = await fetch(`${process.env.URL}/query?function=OVERVIEW&symbol=IBM&apikey=demo`)
   const overview = await res.json();
 
