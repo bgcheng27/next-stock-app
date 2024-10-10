@@ -48,7 +48,36 @@ const stockData = {
   ],
 }
 
-export function StockDetail({ tickerSymbol, companyName }: { tickerSymbol: string, companyName: string }) {
+type StockDetailProps = {
+  title: {
+    tickerSymbol: string,
+    companyName: string
+  },
+  quoteData: {
+    previousClose: string,
+    dividendYield: string,
+    dayRange: {
+      low: string,
+      high: string
+    },
+    yearRange: {
+      low: string,
+      high: string,
+    },
+    volume: string,
+    primaryExchange: string,
+  },
+  statistics: {
+    peRatio: string,
+    priceSalesRatio: string,
+    eps: string,
+    beta: string,
+    marketCap: string,
+    analystTargetPrice: string
+  }
+}
+
+export function StockDetail({ title, quoteData, statistics }: StockDetailProps) {
   const [selectedInterval, setSelectedInterval] = useState("1D")
 
   return (
@@ -56,7 +85,7 @@ export function StockDetail({ tickerSymbol, companyName }: { tickerSymbol: strin
       <main className="flex-1 py-6 px-4 md:px-6">
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold">{tickerSymbol} - {companyName}</h1>
+            <h1 className="text-3xl font-bold">{title.tickerSymbol} - {title.companyName}</h1>
             <div className="text-2xl font-semibold">$170.35 <span className="text-green-500 text-lg">+2.15 (1.28%)</span></div>
           </div>
           <Card>
@@ -104,28 +133,28 @@ export function StockDetail({ tickerSymbol, companyName }: { tickerSymbol: strin
               <CardContent>
                 <dl className="grid grid-cols-2 gap-4">
                   <div>
-                    <dt className="text-sm font-medium text-muted-foreground">Open</dt>
-                    <dd className="text-lg font-semibold">$168.20</dd>
+                    <dt className="text-sm font-medium text-muted-foreground">Previous Close</dt>
+                    <dd className="text-lg font-semibold">${quoteData.previousClose}</dd>
                   </div>
                   <div>
-                    <dt className="text-sm font-medium text-muted-foreground">Previous Close</dt>
-                    <dd className="text-lg font-semibold">$168.41</dd>
+                    <dt className="text-sm font-medium text-muted-foreground">Dividend Yield</dt>
+                    <dd className="text-lg font-semibold">{quoteData.dividendYield}%</dd>
                   </div>
                   <div>
                     <dt className="text-sm font-medium text-muted-foreground">Day&apos;s Range</dt>
-                    <dd className="text-lg font-semibold">$167.54 - $170.92</dd>
+                    <dd className="text-lg font-semibold">${quoteData.dayRange.low} - ${quoteData.dayRange.high}</dd>
                   </div>
                   <div>
                     <dt className="text-sm font-medium text-muted-foreground">52 Week Range</dt>
-                    <dd className="text-lg font-semibold">$124.17 - $198.23</dd>
+                    <dd className="text-lg font-semibold">${quoteData.yearRange.low} - ${quoteData.yearRange.high}</dd>
                   </div>
                   <div>
                     <dt className="text-sm font-medium text-muted-foreground">Volume</dt>
-                    <dd className="text-lg font-semibold">52,379,969</dd>
+                    <dd className="text-lg font-semibold">{quoteData.volume}</dd>
                   </div>
                   <div>
-                    <dt className="text-sm font-medium text-muted-foreground">Avg. Volume</dt>
-                    <dd className="text-lg font-semibold">56,206,428</dd>
+                    <dt className="text-sm font-medium text-muted-foreground">Primary Exchange</dt>
+                    <dd className="text-lg font-semibold">{quoteData.primaryExchange}</dd>
                   </div>
                 </dl>
               </CardContent>
@@ -137,28 +166,28 @@ export function StockDetail({ tickerSymbol, companyName }: { tickerSymbol: strin
               <CardContent>
                 <dl className="grid grid-cols-2 gap-4">
                   <div>
-                    <dt className="text-sm font-medium text-muted-foreground">Market Cap</dt>
-                    <dd className="text-lg font-semibold">$2.67T</dd>
-                  </div>
-                  <div>
                     <dt className="text-sm font-medium text-muted-foreground">P/E Ratio</dt>
-                    <dd className="text-lg font-semibold">28.23</dd>
+                    <dd className="text-lg font-semibold">{statistics.peRatio}</dd>
                   </div>
                   <div>
-                    <dt className="text-sm font-medium text-muted-foreground">Dividend Yield</dt>
-                    <dd className="text-lg font-semibold">0.51%</dd>
+                    <dt className="text-sm font-medium text-muted-foreground">Price/Sales Ratio</dt>
+                    <dd className="text-lg font-semibold">{statistics.priceSalesRatio}</dd>
                   </div>
                   <div>
                     <dt className="text-sm font-medium text-muted-foreground">EPS (TTM)</dt>
-                    <dd className="text-lg font-semibold">$6.13</dd>
+                    <dd className="text-lg font-semibold">${statistics.eps}</dd>
                   </div>
                   <div>
                     <dt className="text-sm font-medium text-muted-foreground">Beta</dt>
-                    <dd className="text-lg font-semibold">1.28</dd>
+                    <dd className="text-lg font-semibold">{statistics.beta}</dd>
                   </div>
                   <div>
-                    <dt className="text-sm font-medium text-muted-foreground">1y Target Est</dt>
-                    <dd className="text-lg font-semibold">$199.26</dd>
+                    <dt className="text-sm font-medium text-muted-foreground">Market Cap</dt>
+                    <dd className="text-lg font-semibold">${statistics.marketCap}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-sm font-medium text-muted-foreground">Analyst Target Price</dt>
+                    <dd className="text-lg font-semibold">${statistics.analystTargetPrice}</dd>
                   </div>
                 </dl>
               </CardContent>
