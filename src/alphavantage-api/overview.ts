@@ -1,6 +1,7 @@
 export async function getOverview() {
   const res = await fetch(
-    `${process.env.URL}/query?function=OVERVIEW&symbol=IBM&apikey=demo`
+    `${process.env.URL}/query?function=OVERVIEW&symbol=IBM&apikey=demo`,
+    { cache: "no-store" }
   );
 
   return res.json();
@@ -8,7 +9,8 @@ export async function getOverview() {
 
 export async function getQuote() {
   const res = await fetch(
-    `${process.env.URL}/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo`
+    `${process.env.URL}/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo`,
+    { cache: "no-store" }
   );
 
   return res.json();
