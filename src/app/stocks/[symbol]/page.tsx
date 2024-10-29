@@ -17,11 +17,14 @@ function formatMarketCap(value: string | number): string {
   return `${formatted}${suffixes[magnitude]}`;
 }
 
-export default async function StockPage() {
+export default async function StockPage({ params }: { params: { symbol: string } }) {
+  const symbol = params.symbol.toUpperCase();
+  const interval = "1min"
+
   const [overview, quote, timeSeries] = await Promise.all([
-    getOverview(),
-    getQuote(),
-    getTimeSeries(),
+    getOverview(symbol),
+    getQuote(symbol),
+    getTimeSeries(symbol, interval),
   ]);
   const globalQuote = quote["Global Quote"];
 
@@ -55,7 +58,7 @@ export default async function StockPage() {
     analystTargetPrice: formatTwoDecimalPlaces(overview["AnalystTargetPrice"]),
   };
 
-  const timeSeriesData: TimeSeriesData = timeSeries["Time Series (5min)"];
+  const timeSeriesData: TimeSeriesData = timeSeries[`Time Series (${interval})`];
 
   const lastTradingDay =
     timeSeries["Meta Data"]["3. Last Refreshed"].split(" ")[0];
