@@ -4,42 +4,34 @@ const INTERVAL_MAP = {
   "1D": 1,
   "1W": 5,
   "1M": 30,
-}
+};
 
-export function getIntervalStartDate(dataArray: ModifiedStockDataProps[], latestTradingDay: string, daysAgo: number) {
-  if (daysAgo === 1) {
-    return latestTradingDay;
+export function getIntervalStartDate(
+  dataArray: ModifiedStockDataProps[],
+  daysAgo: number
+) {
+
+  const uniqueDates = new Set();
+
+  for (let i = dataArray.length - 1; i >= 0; i--) {
+    const date = dataArray[i].dateTime.string.split(" ")[0]
+    uniqueDates.add(date);
+
+    if (uniqueDates.size === daysAgo) {
+      return date;
+    }
   }
 
-  const offset = daysAgo - 1
-
-
-  const latestTradingDate = new Date(latestTradingDay);
-  const estimatedStartDate = new Date(latestTradingDate);
-  estimatedStartDate.setDate(latestTradingDate.getDate() - offset)
-
-  const estimatedDateString = estimatedStartDate.toISOString().split("T")[0];
-
-  const foundDate = dataArray.find(item => item.dateTime.string.startsWith(estimatedDateString));
-  if (foundDate) {
-    return estimatedDateString;
-  }
-
-  // If not found, check for the closest available date
-  const closestDate = dataArray
-    .filter(item => new Date(item.dateTime.string.split(" ")[0]) <= estimatedStartDate)
-    .sort((a, b) => new Date(b.dateTime.string).getTime() - new Date(a.dateTime.string).getTime())[0];
-
-  // Return the closest available date or the earliest date in the dataArray if no suitable date is found
-  return closestDate ? closestDate.dateTime.string.split(" ")[0] : dataArray[0].dateTime.string.split(" ")[0];
+  // in case we don't reach (1M will be on the margin), we just return the start of the array we received
+  return dataArray[0].dateTime.string.split(" ")[0];
 }
 
 export function setIntradayArray(
   latestTradingDay: string,
   dataArray: ModifiedStockDataProps[],
-  interval: TimeInterval,
+  interval: TimeInterval
 ): ModifiedStockDataProps[] {
-  const startDate = getIntervalStartDate(dataArray, latestTradingDay, INTERVAL_MAP[interval]);
+  const startDate = getIntervalStartDate(dataArray, INTERVAL_MAP[interval]);
 
   const startIndex = dataArray.findIndex(
     (data) => data.dateTime.string === `${startDate} 09:30:00`
@@ -57,7 +49,9 @@ export function setIntradayArray(
         return minute === "30" || minute === "00";
       });
     case "1M":
-      return initialArray.filter((item) => item.dateTime.string.endsWith("16:00:00"));
+      return initialArray.filter((item) =>
+        item.dateTime.string.endsWith("16:00:00")
+      );
     default:
       return initialArray;
   }
